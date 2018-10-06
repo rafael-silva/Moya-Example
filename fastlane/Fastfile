@@ -1,0 +1,62 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+fastlane_version " 2.105.1"
+
+default_platform(:ios)
+
+platform :ios do
+	desc "Criar um certificado code signing e provisioning profile"
+	lane :provision do
+		#Produce cria um app básico no itunes connect e portal de 
+		#desenvolvedor com dados especificado a seguir.
+	    produce(
+	    	app_name: 'Marvel Fastlane',
+     	 	language: 'English',
+     		app_version: '1.0',
+			sku: '1537565637'
+	    )
+
+		cert # cria e mantém automaticamente os iOS code signing certificates..
+		sigh(force: true) # cria, renova, baixa e repara os provisioning profiles a cada execução
+						  # assim garante o uso do certificado correto
+						  # podendo ser sigh(development: true) ou sigh(adhoc: true)
+
+	end
+
+	desc "Tirar screenshots"
+	lane :screenshot do 
+		snapshot
+	end
+	
+	desc "Gerar IPA"
+	lane :build do
+		increment_build_number
+		gym
+	end
+
+	desc "Enviar para App Store e liberar para review"
+	lane :upload do
+		deliver(
+			submit_for_review: true
+		)
+	end
+
+	
+	error do |lane, exception|
+ 		puts "something happened: #{exception.to_s}"
+ 		puts "stacktrace: #{exception.backtrace}"
+	end
+end

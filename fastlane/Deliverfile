@@ -1,0 +1,26 @@
+# The Deliverfile allows you to store various App Store Connect metadata
+
+price_tier 0
+
+app_review_information (
+	fist_name: "Rafael",
+	last_name: "Silva",
+	phone_address: "51997341719",
+	email_address: "rafael.ms@outlook.com.br",
+	demo_user: "N/A",
+	demos_password: "N/A",
+	notas: "Nenhuma conta demo é necessaria."
+)
+
+submission_information ({
+	export_compliance_encrypto_update: false,
+	export_compliance_uses_encrypto: false,
+	content_rights_contains_third_party_content: false,
+	add_id_info_uses_idfa: false
+})
+
+automatic_release false
+
+app_icon '.fastlane/metadata.AppIcon.png'
+
+app_rating_config_path ".fastlane.metadata.itunes_rating_config.json"
